@@ -24,7 +24,7 @@ def read_yaml(path: Path) -> ConfigBox:
 @ensure_annotations
 def create_directories(paths: list):
     for path in paths:
-        os.makedirs(path)
+        os.makedirs(path, exist_ok=True)
         logger.info(f'created directory: {path}')
 
 @ensure_annotations
