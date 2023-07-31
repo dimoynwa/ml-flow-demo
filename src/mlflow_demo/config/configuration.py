@@ -1,6 +1,6 @@
 from src.mlflow_demo.constants import *
 from src.mlflow_demo.utils.common import read_yaml, create_directories
-from src.mlflow_demo.entity.config_entity import DataIngestionConfig, DataValidationConfig
+from src.mlflow_demo.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
 
 class ConfigurationManager:
     def __init__(self, 
@@ -31,3 +31,9 @@ class ConfigurationManager:
             STATUS_FILE=self.config.data_validation.STATUS_FILE,
             all_schema=self.schema.COLUMNS
         )
+    
+    def get_data_transformation_config(self):
+        create_directories([self.config.data_transformation.root_dir])
+        return DataTransformationConfig(root_dir=self.config.data_transformation.root_dir,
+                                        data_path=self.config.data_transformation.data_path)
+    
