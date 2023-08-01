@@ -3,7 +3,8 @@ from src.mlflow_demo.utils.common import read_yaml, create_directories
 from src.mlflow_demo.entity.config_entity import (DataIngestionConfig,
                                                   DataValidationConfig,
                                                   DataTransformationConfig,
-                                                  ModelTrainerConfig)
+                                                  ModelTrainerConfig,
+                                                  ModelEvaluationConfig)
 
 class ConfigurationManager:
     def __init__(self, 
@@ -51,3 +52,12 @@ class ConfigurationManager:
                                   l1_ratio=self.params.ElasticNet.l1_ratio,
                                   target_column=self.schema.TARGET_COLUMN.name)
     
+    def get_model_evaluation_config(self):
+        create_directories([self.config.model_evaluation.root_dir])
+        return ModelEvaluationConfig(root_dir=self.config.model_evaluation.root_dir,
+                                     test_data_path=self.config.model_evaluation.test_data_path,
+                                     model_path=self.config.model_evaluation.model_path,
+                                     metrics_file_name=self.config.model_evaluation.metrics_file_name,
+                                     all_params=self.params.ElasticNet,
+                                     target_column=self.schema.TARGET_COLUMN.name,
+                                     mlflow_uri='https://dagshub.com/dimoynwa/ml-flow-demo.mlflow')
