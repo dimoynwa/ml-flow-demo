@@ -62,3 +62,58 @@ export MLFLOW_TRACKING_PASSWORD=b438e26f2c75bb68347e97b2096330de3ad1e94f
 ```
 
 
+# Deployment
+
+### About the deploymnet
+
+1. Build Docker image
+2. Push docker image to ECR
+3. Launch EC2 Instance
+4. Pull image from ECR to your EC2
+5. Launch docker image in EC2 Instance
+
+# Policy:
+IAM User policies: AmazonEC2ContainerRegistryFullAccess, AmazonEC2FullAccess
+
+## Create ECR repo to store docker image
+    ECR_REPO: 282245150475.dkr.ecr.eu-central-1.amazonaws.com/mlflow-demo
+
+## Create EC2 instance (Ubuntu)
+
+## Open EC2 and install docker in EC2:
+
+    ```bash
+        sudo apt-get update -y
+    ```
+    ```bash
+        sudo apt-get upgrade
+    ```
+
+    ```bash
+        curl -fsSL https://get.docker.com -o get-docker.sh
+    ```
+    ```bash
+        sudo sh get-docker.sh
+    ```
+
+    ```bash
+        sudo usermod -aG docker ubuntu
+    ```
+    ```bash
+        newgrp docker
+    ```
+
+## Configure EC2 as self hosted runner 
+In your github:
+```bash
+    settings>actions>runner>new self hosted runner> choose os> run commands one by one
+```
+
+## Setup Gitlab secrets 
+```
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=eu-central-1
+AWS_ECR_LOGIN_URI= demo>> 282245150475.dkr.ecr.eu-central-1.amazonaws.com
+ECR_REPOSITORY_NAME=mlflow-demo
+```
