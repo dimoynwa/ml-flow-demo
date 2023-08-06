@@ -105,15 +105,24 @@ IAM User policies: AmazonEC2ContainerRegistryFullAccess, AmazonEC2FullAccess
 
 ## Configure EC2 as self hosted runner 
 In your github:
-```bash
-    settings>actions>runner>new self hosted runner> choose os> run commands one by one
+```
+    settings>actions>runner>new self hosted runner> choose os> run commands one by one on your EC2 machine
+
+    When asking for name of the runner, type: self-hosted
+    Skip adding additional labels
+    For name of the working folder press Enter
 ```
 
 ## Setup Gitlab secrets 
+How to get them:
+1. Go to your github repo
+2. Click settings> Secrets and variables>Actions> New repository secret
+3. For all the keys bellow add values
+4. Get the values from files downloaded from creating EC2 instance Access keys
 ```
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_REGION=eu-central-1
-AWS_ECR_LOGIN_URI= demo>> 282245150475.dkr.ecr.eu-central-1.amazonaws.com
+AWS_ECR_LOGIN_URI= 282245150475.dkr.ecr.eu-central-1.amazonaws.com
 ECR_REPOSITORY_NAME=mlflow-demo
 ```
